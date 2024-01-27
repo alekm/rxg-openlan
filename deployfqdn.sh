@@ -34,7 +34,7 @@ echo "AUTHENTICATION_DEFAULT_PASSWORD=${passhash}" | sudo tee -a /opt/openwifi/d
 
 # setup ENV variables for public deployment
 
-printf "\n\nEnter FQDN for public accessibility (Blank for private self-signed only, domain must exist):"
+printf "\n\nEnter FQDN for public accessibility (Blank for private self-signed only, domain must exist):\n"
 
 read fqdn 
 
