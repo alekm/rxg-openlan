@@ -21,10 +21,10 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 sudo git clone https://github.com/Telecominfraproject/wlan-cloud-ucentral-deploy.git /opt/openwifi
 
 # edit default user/pass
-printf "\n\nEnter initial email login:\n"
+printf "\n\nEnter initial email login: "
 read loginemail
 printf "\n"
-printf "Enter initial web interface password (required to change at first login):\n"
+printf "Enter initial web interface password (required to change at first login): "
 read initialpass
 userpass="${initialpass}${loginemail}"
 passhash=$(echo -n "${userpass}"|shasum -a 256 | cut -d" " -f1)
@@ -34,14 +34,14 @@ echo "AUTHENTICATION_DEFAULT_PASSWORD=${passhash}" | sudo tee -a /opt/openwifi/d
 
 # setup ENV variables for public deployment
 
-printf "\n\nEnter FQDN for public accessibility (Blank for private self-signed only, domain must exist):\n"
+printf "\n\nEnter FQDN for public accessibility (Blank for private self-signed only, domain must exist): "
 
 read fqdn 
 
 # if FQDN exists, set env variables for LetsEncrypt cert pull
 
 if [ -n "$fqdn" ]; then
-	printf "\n\nEnter email for LetsEncrypt certificate:"
+	printf "\n\nEnter email for LetsEncrypt certificate: "
 	read leemail
 	
 cat <<EOF |  sudo tee -a /etc/environment > /dev/null
