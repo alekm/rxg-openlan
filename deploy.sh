@@ -19,7 +19,7 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 
 # clone openwifi controller to /opt/openwifi
 sudo git clone https://github.com/Telecominfraproject/wlan-cloud-ucentral-deploy.git /opt/openwifi
-sudo docker-compose --project-directory /top/openwifi/docker-compose pull
+sudo docker-compose --project-directory /opt/openwifi/docker-compose pull
 
 # edit default user/pass
 printf "\n\nEnter initial email login:\n"
