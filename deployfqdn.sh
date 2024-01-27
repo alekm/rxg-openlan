@@ -40,33 +40,36 @@ read fqdn
 
 # if FQDN exists, set env variables for LetsEncrypt cert pull
 
-if [ -n "${fqdn}" ]; then
+if [ -n "$fqdn" ]; then
 	printf "\n\nEnter email for LetsEncrypt certificate:"
 	read leemail
 	
-	export SDKHOSTNAME=${fqdn}
-    export DEFAULT_UCENTRALSEC_URL=https://${fqdn}:16001
-	export SYSTEM_URI_UI=https://${fqdn}:16001
-	export OWGW_FILEUPLOADER_HOST_NAME=${fqdn}
-	export OWGW_FILEUPLOADER_URI=https://${fqdn}:16003
-	export OWGW_SYSTEM_URI_PUBLIC=https://${fqdn}:16002
-	export OWGW_RTTY_SERVER=${fqdn}
-	export OWSEC_SYSTEM_URI_PUBLIC=https://${fqdn}:16001
-	export OWFMS_SYSTEM_URI_PUBLIC=https://${fqdn}:16004
-	export OWPROV_SYSTEM_URI_PUBLIC=https://${fqdn}:16005
-	export OWANALYTICS_SYSTEM_URI_PUBLIC=https://${fqdn}:16009
-	export OWSUB_SYSTEM_URI_PUBLIC=https://${fqdn}:16006
-	export OWRRM_SERVICECONFIG_PRIVATEENDPOINT=https://openwifi.wlan.local:16789
-	export OWRRM_SERVICECONFIG_PUBLICENDPOINT=https://${fqdn}:16789
-	export TRAEFIK_TAG=latest
-	export INTERNAL_OWGW_HOSTNAME=openwifi.wlan.local
-	export INTERNAL_OWPROVUI_HOSTNAME=openwifi.wlan.local
-	export OWRRM_TAG=main
-	export INTERNAL_OWRRM_HOSTNAME=openwifi.wlan.local
-	export TRAEFIK_CERTIFICATESRESOLVERS_OPENWIFI_ACME_EMAIL=${leemail}
+cat <<EOF |  sudo tee -a /etc/environment > /dev/null
+SDKHOSTNAME=$fqdn
+DEFAULT_UCENTRALSEC_URL=https://$fqdn:16001
+SYSTEM_URI_UI=https://$fqdn:16001
+OWGW_FILEUPLOADER_HOST_NAME=$fqdn
+OWGW_FILEUPLOADER_URI=https://$fqdn:16003
+OWGW_SYSTEM_URI_PUBLIC=https://$fqdn:16002
+OWGW_RTTY_SERVER=$fqdn
+OWSEC_SYSTEM_URI_PUBLIC=https://$fqdn:16001
+OWFMS_SYSTEM_URI_PUBLIC=https://$fqdn:16004
+OWPROV_SYSTEM_URI_PUBLIC=https://$fqdn:16005
+OWANALYTICS_SYSTEM_URI_PUBLIC=https://$fqdn:16009
+OWSUB_SYSTEM_URI_PUBLIC=https://$fqdn:16006
+OWRRM_SERVICECONFIG_PRIVATEENDPOINT=https://openwifi.wlan.local:16789
+OWRRM_SERVICECONFIG_PUBLICENDPOINT=https://$fqdn:16789
+TRAEFIK_TAG=latest
+INTERNAL_OWGW_HOSTNAME=openwifi.wlan.local
+INTERNAL_OWPROVUI_HOSTNAME=openwifi.wlan.local
+OWRRM_TAG=main
+INTERNAL_OWRRM_HOSTNAME=openwifi.wlan.local
+TRAEFIK_CERTIFICATESRESOLVERS_OPENWIFI_ACME_EMAIL=${leemail}
+EOF
 fi	
 
 
 
 # deploy controller
-sudo /opt/openwifi/docker-compose/deploy.sh
+cd /opt/openwifi/docker-compose/
+sudo ./deploy.sh
